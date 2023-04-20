@@ -1,0 +1,31 @@
+{
+    "name": "demo-backend",
+    "description": "Demo Application",
+    "license": "Proprietary",
+    "author": "JPSI",
+    "private": true,
+    "_moduleAliases": {
+        "@src": "dist"
+    },
+    "scripts": {
+        "check": "tsc --noEmit",
+        "dev": "tsc-watch --sourceMap true --onSuccess \"node --enable-source-maps dist/main 8001\"",
+        "build": "tsc"
+    },
+    "dependencies": {
+        "@types/ldapjs": "^2.2.5",
+        "@types/mssql": "^8.1.1",
+        "@types/node": "^18.11.10",
+        "@types/ua-parser-js": "^0.7.36",
+        "ldapjs": "^2.3.3",
+        "mariadb": "^3.0.2",
+        "module-alias": "^2.2.2",
+        "mssql": "^9.0.1",
+        "nanoid": "^3.3.4",
+        "node-libcurl": "^3.0.0",
+        "parcel": "^2.8.0",
+        "tsc-watch": "^5.0.3",
+        "typescript": "^4.9.3",
+        "ua-parser-js": "^1.0.32"
+    }
+}

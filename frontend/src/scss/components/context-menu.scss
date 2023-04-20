@@ -1,0 +1,24 @@
+.context-menu {
+
+    .box {
+
+        .item {
+
+            display: block;
+            padding: 10px 25px;
+            padding-right: 45px;
+            font-weight: 500;
+            font-size: 14px;
+            color: black;
+            cursor: pointer;
+
+            &:hover {
+                background: rgba(0, 0, 0, 0.09);
+            }
+
+            &:active {
+                background: rgba(0, 0, 0, 0.13)
+            }
+        }
+    }
+}

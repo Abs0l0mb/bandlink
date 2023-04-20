@@ -1,0 +1,103 @@
+.footer {
+
+    z-index: 999;
+    width: 100vw;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+
+    > .content {
+
+        width: max-content;
+        background: #003247;
+        border-radius: 6px;
+        position: absolute;
+        bottom: 8px;
+        right: 8px;
+        opacity: 0;
+        transform: translateX(-100px);
+        transition: all .5s;
+
+        > * {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        > .copyright {
+            color: #fff;
+            padding: 7px 10px 5px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        > .flags {
+
+            height: 28px;
+            padding-left: 14px;
+
+            > .flag {
+
+                width: 25px;
+                height: 17px;
+                background-position: 50%;
+                background-repeat: no-repeat;
+                background-size: 100%;
+                border-radius: 3px;
+                margin-right: 14px;
+                float: left;
+                position: relative;
+                top: 6px;
+
+                &.flag-1 { background-image: url('data-url:../assets/images/svg/flags/8.svg'); }
+                &.flag-2 { background-image: url('data-url:../assets/images/svg/flags/1.svg'); }
+                &.flag-3 { background-image: url('data-url:../assets/images/svg/flags/2.svg'); }
+                &.flag-4 { background-image: url('data-url:../assets/images/svg/flags/4.svg'); }
+                &.flag-5 { background-image: url('data-url:../assets/images/svg/flags/19.svg'); }
+                &.flag-6 { background-image: url('data-url:../assets/images/svg/flags/5.svg'); }
+                &.flag-7 { background-image: url('data-url:../assets/images/svg/flags/6.svg'); }
+                &.flag-8 { background-image: url('data-url:../assets/images/svg/flags/7.svg'); }
+                &.flag-9 { background-image: url('data-url:../assets/images/svg/flags/9.svg'); }
+                &.flag-10 { background-image: url('data-url:../assets/images/svg/flags/10.svg'); }
+                &.flag-11 { background-image: url('data-url:../assets/images/svg/flags/11.svg'); }
+                &.flag-12 { background-image: url('data-url:../assets/images/svg/flags/12.svg'); }
+                &.flag-13 { background-image: url('data-url:../assets/images/svg/flags/13.svg'); }
+                &.flag-14 { background-image: url('data-url:../assets/images/svg/flags/15.svg'); }
+                &.flag-15 { background-image: url('data-url:../assets/images/svg/flags/14.svg'); }
+                &.flag-16 { background-image: url('data-url:../assets/images/svg/flags/16.svg'); }
+                &.flag-17 { background-image: url('data-url:../assets/images/svg/flags/17.svg'); }
+                &.flag-18 { background-image: url('data-url:../assets/images/svg/flags/3.svg'); }
+                &.flag-19 { background-image: url('data-url:../assets/images/svg/flags/18.svg'); }
+                &.flag-20 { background-image: url('data-url:../assets/images/svg/flags/22.svg'); }
+                &.flag-21 { background-image: url('data-url:../assets/images/svg/flags/20.svg'); }
+                &.flag-22 { background-image: url('data-url:../assets/images/svg/flags/21.svg'); }
+                &.flag-23 { background-image: url('data-url:../assets/images/svg/flags/23.svg'); }
+                &.flag-24 { background-image: url('data-url:../assets/images/svg/flags/lithuania.svg'); }
+                &.flag-25 { background-image: url('data-url:../assets/images/svg/flags/24.svg'); }
+                &.flag-26 { background-image: url('data-url:../assets/images/svg/flags/25.svg'); }
+
+                &:nth-child(22) {
+                    margin-right: 28px;
+                }  
+            }
+        }
+    }
+
+    &[data-displayed="1"] > .content{
+        transform: none;
+        opacity: 1;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+
+    .footer > .content {
+
+        transform: translateX(-50%) !important;
+        right: unset;
+        left: 50%;
+        
+        > .flags {
+            display: none;
+        }
+    }
+}

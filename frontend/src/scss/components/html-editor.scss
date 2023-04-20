@@ -1,0 +1,87 @@
+.html-editor {
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999;
+    background: #fff;
+    opacity: 0;
+    transform: perspective(200px) translateZ(-200px) translateY(0) translateX(0);
+    transition: all 380ms;
+
+    &[data-displayed="1"] {
+        opacity: 1;
+        transform: none;
+    }
+
+    > .editor-zone {
+        
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: calc(100vh - 50px);
+        float: left;
+
+        > .code-zone,
+        > .preview-zone {
+            width: 50vw;
+            height: 100%;
+            float: left;
+        }
+
+        > .preview-zone {
+
+            position: relative;
+            
+            iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border: none;
+            }
+        }
+    }
+
+    > .controls-zone {
+    
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 50px;
+        width: 100vw;
+        background: #f2f2f2;
+        border-top: 1px solid rgba(0, 0, 0, 0.06);
+        display: flex;
+        align-items: center;
+        justify-content: right;
+
+        > * {
+            margin-right: 12px;
+        }
+
+        > input {
+            height: 27px;
+            border: 1px solid rgba(0, 0, 0, 0.25);
+            padding: 0 12px;
+            border-radius: 50px;
+        }
+    }
+}
+
+@media only screen and (max-width: 800px) {
+
+    .html-editor > .editor-zone {
+
+        > .code-zone,
+        > .preview-zone {
+            width: 100vw;
+            height: 50%;
+            float: unset;
+        }
+    }
+}
