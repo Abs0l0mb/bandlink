@@ -1,0 +1,62 @@
+
+//band
+{
+    "name": "band1",
+    "annoucement": "band1 announcement !",
+    "bio": "we are band1",
+    "photo_path": "./assets/images/band_photo.png",
+    "styles": [
+        1,
+        3
+    ],
+    "searching_for": [
+        1,
+        2
+    ]
+
+}
+
+//musician
+
+{
+    "name": "musician1",
+    "bio": "i am musician1",
+    "photo_path": "./assets/images/musician_photo.png",
+    "styles": [
+        1,
+        3
+    ],
+    "instruments": [
+        1,
+        2
+    ]
+
+}
+
+// styles
+[
+    {
+        "id": 1,
+        "name": "pop"
+    },
+    {
+        "id": 2,
+        "name": "rock"
+    },
+    {
+        "id": 3,
+        "name": "jazz"
+    },
+    {
+        "id": 4,
+        "name": "metal"
+    },
+    {
+        "id": 5,
+        "name": "funk"
+    },
+    {
+        "id": 6,
+        "name": "soul"
+    },
+]
