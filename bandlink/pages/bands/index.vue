@@ -15,6 +15,10 @@
         <img class="w-4/12" src="../assets/images/cortex.jpg"/>
     </div>
 
+<ItemCard>
+    
+</ItemCard>
+
 
 </template> 
 <script setup lang="ts">
