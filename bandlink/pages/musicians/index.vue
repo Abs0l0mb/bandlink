@@ -1,9 +1,7 @@
 <template>
         <div class="rounded-tr-lg bg-slate-900 w-2/12 h-screen p-3">
             <FilterList :items="styles" key="Styles"></FilterList>
-        </div>
-
-    
+        </div>    
 </template> 
 
 
