@@ -6,7 +6,7 @@
 
                 <ul class="flex gap-14">
                     <li>
-                        <NuxtLink to="/">Bands</NuxtLink>
+                        <NuxtLink to="/bands">Bands</NuxtLink>
                     </li>
                     <li>
                         <NuxtLink to="/musicians">Musicians</NuxtLink>
