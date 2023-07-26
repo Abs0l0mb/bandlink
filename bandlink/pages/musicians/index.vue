@@ -5,44 +5,45 @@
 </template> 
 
 
-<script lang="ts">
+<script setup>
 
-    import FilterList from '../../components/FilterList.vue';
+    const supabase = useSupabaseClient()
 
-    export default {
-        components: {
-            FilterList
+
+    let { data, error } = await supabase.rpc('get_styles_translations', { lang: 'ENG' })
+
+    if(error) {
+        console.log(error.details)
+        console.log(error.hint)
+    }
+
+    console.log('data:', data)
+
+    let styles = [
+        {
+            "id": 1,
+            "name": "Pop"
         },
-        data() {
-            return {
-                styles: [
-                    {
-                        "id": 1,
-                        "name": "Pop"
-                    },
-                    {
-                        "id": 2,
-                        "name": "Rock"
-                    },
-                    {
-                        "id": 3,
-                        "name": "Jazz"
-                    },
-                    {
-                        "id": 4,
-                        "name": "Metal"
-                    },
-                    {
-                        "id": 5,
-                        "name": "Funk"
-                    },
-                    {
-                        "id": 6,
-                        "name": "Soul"
-                    },
-                ]     
-            };
-        }
-    };
+        {
+            "id": 2,
+            "name": "Rock"
+        },
+        {
+            "id": 3,
+            "name": "Jazz"
+        },
+        {
+            "id": 4,
+            "name": "Metal"
+        },
+        {
+            "id": 5,
+            "name": "Funk"
+        },
+        {
+            "id": 6,
+            "name": "Soul"
+        },
+    ]
 
 </script>

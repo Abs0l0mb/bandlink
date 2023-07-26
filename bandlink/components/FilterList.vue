@@ -18,7 +18,6 @@
     //const { items } = defineProps(['items']);
 
     export default {
-
         props: {
             items: {
                 type: Array,
@@ -56,7 +55,12 @@
                 });
             });
 
-            const selectItem = (item) => {
+            const selectItem = async (item) => {
+
+                const { data } = await useFetch('/api/test');
+
+                console.log(data);
+
                 /* here goes the adding to the list of filters, refreshing of the list, etc...*/
                 console.log('clicked on ' + item.name)
                 selectedItem.value = item
