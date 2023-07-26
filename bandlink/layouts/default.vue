@@ -23,7 +23,7 @@
             </nav>
         </header>
     </div>
-    <div class="text-white transition-all">
+    <div class="text-white transition-all px-10">
         <slot/> 
     </div>
 </template>
