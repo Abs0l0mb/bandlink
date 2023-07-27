@@ -9,7 +9,7 @@
         <p class="w-8/12 text-5xl font-semibold">{{ musician.name }}</p>
         
         <input type="checkbox" id="react-option" value="" class="hidden peer" required="">
-        <label id="lookingButton" for="react-option" @click="updateLookingForBands()" class="inline-flex items-center justify-between p-5 border-2 text-gray-500 bg-white border-gray-200 rounded-lg cursor-pointer hover:text-gray-300 hover:text-gray-600 duration-500 hover:bg-gray-50 text-gray-400 bg-gray-800 hover:bg-gray-700">                           
+        <label id="lookingButton" for="react-option" @click="updateLookingForBands()" class="inline-flex items-center justify-between p-5 border-2 text-gray-500 border-gray-200 rounded-lg cursor-pointer hover:text-gray-300 hover:text-gray-600 duration-500 hover:bg-gray-50 text-gray-400 bg-gray-800 hover:bg-gray-700">                           
             <div class="block flex gap-8">
                 <img class="h-6 w-6"  src="../../assets/images/loupe.png" />
                 <div class="w-full text-lg font-semibold">Looking for band</div>

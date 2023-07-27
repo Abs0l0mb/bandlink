@@ -1,5 +1,5 @@
 <template>
-        <div class="rounded-tr-lg bg-slate-900 w-2/12 h-screen p-3">
+        <div class="border-t bg-black w-2/12 h-screen p-3">
             <FilterList :items="styles" key="Styles"></FilterList>
         </div>    
 </template> 
@@ -8,7 +8,6 @@
 <script setup>
 
     const supabase = useSupabaseClient()
-
 
     let { data, error } = await supabase.rpc('get_styles_translations', { lang: 'ENG' })
 

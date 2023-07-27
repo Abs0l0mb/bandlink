@@ -1,10 +1,10 @@
 <template>
 
-    <div class="bg-blue-500 p-5 rounded-3xl w-12/12 flex justify-between h-[25vh]">
+    <div class="bg-slate-900 text-white p-5 rounded-3xl w-12/12 flex justify-between h-[25vh]">
         <div class="w-3/12">
             <p class ="mt-[-10px] text-3xl font-semibold border-b-2 w-9/12"> {{ band.name }} </p>
             <div class="mt-[10px] flex flex-wrap gap-2 my-1">
-                <div class="rounded-md bg-blue-400 px-2" v-for="style in band.styles" :key="style">
+                <div class=" text-black font-semibold rounded-lg bg-white px-2" v-for="style in band.styles" :key="style">
                     {{ style }}
                 </div>
             </div>
@@ -20,16 +20,13 @@
 
 
 <script setup>
-/*
-requete base de donnée
-*/
+    /*
+    requete base de donnée
+    */
 
-let band = {
-    name : "Band1",
-    description : "bio",
-    styles : ["Jazz", "Blues", "Rock", "Jazz", "Blues", "Afro Beat"]
-}
-
-
-
+    let band = {
+        name : "Iron Maiden",
+        description : "bio",
+        styles : ["Jazz", "Blues", "Rock", "Jazz", "Blues", "Afro Beat"]
+    }
 </script>
