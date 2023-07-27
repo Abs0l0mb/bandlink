@@ -1,35 +1,37 @@
 <template>
     <div>
-        <header class="shadow-sm bg-slate-900">
-            <nav class="mx-auto p-8 flex justify-between text-white">
-                <p class="font-bold text-cortex-light-green">Cortex Groove</p>
+        <header class="shadow-sm bg-black">
+            <nav class="mx-auto p-4 flex justify-between text-white">
+                <NuxtLink to="/">
+                    <p class="font-bold rounded-lg px-3 py-2">Bandlink</p>
+                </NuxtLink>
 
                 <ul class="flex gap-14">
-                    <li>
+                    <li class="rounded-lg px-3 py-2">
                         <NuxtLink to="/bands">Bands</NuxtLink>
                     </li>
-                    <li>
+                    <li class="rounded-lg px-3 py-2">
                         <NuxtLink to="/musicians">Musicians</NuxtLink>
                     </li>
-                    <li>
+                    <li class="rounded-lg px-3 py-2">
                         <NuxtLink to="/cortexes">Map</NuxtLink>
                     </li>
-                    <li>
+                    <li class="rounded-lg px-3 py-2">
                         <NuxtLink to="/neural-networks">My Bands</NuxtLink>
                     </li>
                 </ul>
-                <NuxtLink to="/account">Account</NuxtLink>
+                <NuxtLink to="/account" class="rounded-full bg-violet-500 px-4 py-2">Account</NuxtLink>
 
             </nav>
         </header>
     </div>
-    <div class="text-white transition-all px-10">
+    <div class="text-black transition-all">
         <slot/> 
     </div>
 </template>
 
 <style scoped>
     .router-link-exact-active {
-        color: #C4F1BE;
+        color: #d8b4fe;
     }
 </style>
