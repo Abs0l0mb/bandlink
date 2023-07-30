@@ -7,7 +7,7 @@
             </li>
         </ul>
         <div class="" id="filters"> 
-            
+            <li class="bg-slate-700 rounded-md px-1" v-for="filter in filters" :key="filter.name"> {{ filter.name }}</li>
         </div>
     </div>
 </template>
@@ -15,9 +15,10 @@
 <script>
 
     import {ref, computed, defineProps} from 'vue'
-    //const { items } = defineProps(['items']);
+    import FilterItem from "./FilterItem"
 
     export default {
+
         props: {
             items: {
                 type: Array,
@@ -28,13 +29,19 @@
                 required: true
             }
         },
+        components: {
+            FilterItem
+        },
+
         setup(props) {
 
             //document.getElementById('search').placeholder = props.key;
 
-            let items = props.items;
+            let items = props.items
 
             let searchTerm = ref('')
+
+            let filters = ref([])
 
             const searchItems = computed(() => {
 
@@ -52,25 +59,18 @@
                         
                         return item
                     }
-                });
-            });
+                })
+            })
 
             const selectItem = async (item) => {
 
-                const { data } = await useFetch('/api/test');
+                filters.value.push({name: item.name})
 
-                console.log(data);
+                console.log(filters._rawValue);
 
-                /* here goes the adding to the list of filters, refreshing of the list, etc...*/
-                console.log('clicked on ' + item.name)
-                selectedItem.value = item
-                searchTerm.value = ''
-
-                let newFilter = document.createElement('div')
-                let newFilerText = document.createTextNode(item.name)
-                newFilter.className = 'bg-slate-700 rounded-md px-1'
-                newFilter.append(newFilerText)
-                document.getElementById('filters').append(newFilter)
+                //const { data } = await useFetch('/api/test')
+                
+                //console.log(data)
             }
             
             let selectedItem = ref('')
