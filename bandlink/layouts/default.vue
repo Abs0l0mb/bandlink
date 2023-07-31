@@ -2,8 +2,9 @@
     <div>
         <header class="shadow-sm bg-black">
             <nav class="mx-auto p-4 flex justify-between text-white">
-                <NuxtLink to="/">
-                    <p class="font-bold rounded-lg px-3 py-2">Bandlink</p>
+                
+                <NuxtLink class="flex" to="/">
+                    <img class="w-3/12" src="../public/favicon.ico"/> <p class="font-bold rounded-lg px-3 py-2">Bandlink</p>
                 </NuxtLink>
 
                 <ul class="flex gap-14">
@@ -35,3 +36,9 @@
         color: #d8b4fe;
     }
 </style>
+
+<script setup>
+    useHead({
+        titleTemplate: (title) => `Bandlink`
+    });
+</script>
