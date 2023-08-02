@@ -26,11 +26,7 @@
 				<div class="w-full bg-white lg:w-6/12 xl:w-5/12">
 					<div class="flex flex-col items-start justify-start w-full h-full p-4 lg:p-8 xl:p-12">
 						<h4 class="w-full text-3xl font-bold">Sign up</h4>
-						<p class="text-lg text-gray-500">
-							or, if you have an account you can
-							<a href="#_" class="text-violet-500 underline" data-primary="blue-600">sign in</a>
-						</p>
-						<div class="relative w-full mt-10 space-y-8">
+						<div class="relative w-full mt-4 space-y-8">
 							<div class="relative">
 								<label class="font-medium text-gray-900">Email</label>
 								<input type="text"
@@ -65,6 +61,7 @@
 <script lang="ts" setup>
 
 	import { createClient } from '@supabase/supabase-js'
+	import { useRouter } from 'vue-router';
 
 	//console.log(process.env.VUE_APP_SUPABASE_URL, process.env.VUE_APP_SUPABASE_KEY)
 	const supabase = createClient("https://vxnlmkevkguycioscpzk.supabase.co", 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4bmxta2V2a2d1eWNpb3NjcHprIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTAzNjU0MDIsImV4cCI6MjAwNTk0MTQwMn0.Ayw39t5Ax8lXsW8DfZOcUoeUgbQaZkOBLH--i-3p4qo')
@@ -86,10 +83,13 @@
 					password: (document.getElementById("passwordInput") as HTMLInputElement).value,
 				})
 
-				if(data)
-					console.log(data)
-				if(error)
-					console.log(error)
+				if(!error) {
+					await supabase.auth.signInWithPassword({
+						email: (document.getElementById("emailInput") as HTMLInputElement).value,
+						password: (document.getElementById("passwordInput") as HTMLInputElement).value,
+					})
+					window.location.href = window.location.origin + "/";
+				}
 			}
 		}
 	}
