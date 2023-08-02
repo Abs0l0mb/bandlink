@@ -11,7 +11,7 @@
                     <span class="block">Bands</span>
                 </NuxtLink>
                 <NuxtLink to="/Musicians" class="relative font-medium text-gray-600 duration-150 hover:text-gray-900">
-                    <span class="block">My Bands</span>
+                    <span class="block">Musicians</span>
                 </NuxtLink>
                 <NuxtLink to="/Map" class="relative font-medium text-gray-600 duration-150 hover:text-gray-900">
                     <span class="block">Map</span>
