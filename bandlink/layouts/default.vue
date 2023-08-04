@@ -1,10 +1,10 @@
 <template>
-    <section @triedLogIn="verifySession()" class="border-b-2 border-gray-100 relative w-full px-8 text-gray-700 bg-white body-font tails-selected-element"
+    <section @triedLogIn="verifySession()" class="border-b-2 border-gray-100 relative w-full px-4 text-gray-700 bg-white body-font tails-selected-element"
         data-tails-scripts="//unpkg.com/alpinejs">
         <div class="container flex flex-col flex-wrap items-center justify-between py-5 mx-auto md:flex-row max-w-7xl">
             <NuxtLink to="/"
-                class="relative z-10 flex items-center w-auto text-2xl font-extrabold leading-none text-black select-none">
-                <img class='w-[4w] h-[4vw] mr-2' src='../public/favicon.ico'>Bandlink</NuxtLink>
+                class="relative z-10 flex items-center w-auto text-xl leading-none text-black select-none">
+                <img class='w-[3w] h-[3vw] mr-2' src='../public/favicon.ico'>Bandlink</NuxtLink>
             <nav
                 class="top-0 left-0 z-0 flex items-center justify-center w-full h-full py-5 -ml-0 space-x-5 text-base md:-ml-5 md:py-0 md:absolute">
                 <NuxtLink to="/bands" class="relative font-medium text-gray-600 duration-150 hover:text-gray-900">
@@ -50,7 +50,7 @@
 
 <style scoped>
 .router-link-exact-active {
-    font-weight: normal;
+    color: blue;
 }
 </style>
 
