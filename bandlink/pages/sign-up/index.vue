@@ -46,6 +46,7 @@
 							</div>
 							<div class="relative">
 								<a href="#_"
+									@keyup.enter="createAccount()" 
 									@click="createAccount()"
 									class="inline-block w-full px-5 py-4 text-lg font-medium text-center text-white transition duration-200 bg-violet-500 rounded-lg hover:bg-violet-700 ease"
 									data-primary="violet-500" data-rounded="rounded-lg">Create Account</a>
