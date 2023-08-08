@@ -14,27 +14,16 @@
 							dire a quel point c'est trop dar et tout</p>
 						<div class="relative flex flex-col sm:flex-row sm:space-x-4">
 							<NuxtLink to="/sign-up"
-								class="flex items-center w-full px-6 py-3 mb-3 text-lg text-white bg-purple-500 rounded-md sm:mb-0 hover:bg-purple-600 sm:w-auto">
-								Sign up
+								class="flex items-center w-full px-6 py-2 mb-3 text-lg text-white bg-purple-500 rounded-full sm:mb-0 hover:bg-purple-600 sm:w-auto">
+								Get started
 							</NuxtLink>
-							<NuxtLink to="/sign-in"
-								class="flex items-center px-6 py-3 text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300 hover:text-gray-600"
-								data-rounded="rounded-md">
-								Sign in
-							</NuxtLink>
-
 						</div>
 					</div>
 				</div>
 				<div class="w-full md:w-1/2">
 					<div class="w-full h-auto overflow-hidden rounded-md sm:rounded-xl border-gray-300 border-b-2 shadow-2xl"
 						data-rounded-max="rounded-full">
-						<iframe width="560" height="315"
-							src="https://www.youtube.com/embed/6ffmvLm1yMA?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1&loop=1&rel=0"
-							title="YouTube video player" frameborder="0"
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-							allowfullscreen>
-						</iframe>
+						<img src="../../assets/images/imageMain.jpg" />
 					</div>
 				</div>
 			</div>
