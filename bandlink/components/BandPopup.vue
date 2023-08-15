@@ -35,7 +35,7 @@
 
 			</slot>
 			<!-- Add a close button or any other UI elements if needed -->
-			<button @click="$emit('close')" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg">
+			<button @click="$emit('close')" class="mt-4 px-4 py-2 bg-violet-500 text-white rounded-lg">
 				Close
 			</button>
 		</div>
@@ -47,14 +47,18 @@
 	import { createClient } from '@supabase/supabase-js'
 	const supabase = createClient("https://vxnlmkevkguycioscpzk.supabase.co", 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4bmxta2V2a2d1eWNpb3NjcHprIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTAzNjU0MDIsImV4cCI6MjAwNTk0MTQwMn0.Ayw39t5Ax8lXsW8DfZOcUoeUgbQaZkOBLH--i-3p4qo')
 
-	defineProps({
+	const props = defineProps({
 		isCreation: Boolean,
-		isEditable: Boolean,
+		isEdition: Boolean,
 		bandId: Number,
 	})
 
-	const bandNameInput = ref('')
-	const bandBioInput = ref('')
+	const areInputDisabbled = ref((!props.isCreation && !props.isEdition) ? false: true);
+	const bandNameInput = ref('');
+	const bandBioInput = ref('');
+
+	if(!props.isCreation)
+		fetchAndDisplayInfos();
 
 	async function createBand() {
 		let { data, error } = await supabase
@@ -65,6 +69,12 @@
 		})
 		console.log(data)
 		console.log(error)
+	}
+
+	async function fetchAndDisplayInfos() {
+		//fetch band infos with id of props
+		//bandNameInput.value = bandName
+		//bandBioInput.value = bandBio
 	}
 
 </script>

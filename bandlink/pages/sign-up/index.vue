@@ -30,7 +30,9 @@
 							<div class="relative">
 								<label class="font-medium text-gray-900">Email</label>
 								<input type="text"
-									@change="checkEmail()"
+									v-model="email"
+									@change="checkEmail(email)"
+									@keyup.enter="createAccount(email, password)" 
 									id="emailInput"
 									class="block w-full px-4 py-2 mt-2 text-lg placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-opacity-50"
 									data-primary="blue-600" data-rounded="rounded-lg"
@@ -39,15 +41,16 @@
 							<div class="relative">
 								<label class="font-medium text-gray-900">Password</label>
 								<input type="password"
-									@change="checkPassword()"
+									v-model="password"
+									@change="checkPassword(password)"
+									@keyup.enter="createAccount(email, password)" 
 									id="passwordInput"
 									class="block w-full px-4 py-2 mt-2 text-lg placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-opacity-50"
 									data-primary="blue-600" data-rounded="rounded-lg" placeholder="Password" />
 							</div>
 							<div class="relative">
 								<a href="#_"
-									@keyup.enter="createAccount()" 
-									@click="createAccount()"
+									@click="createAccount(email, password)"
 									class="inline-block w-full px-5 py-4 text-lg font-medium text-center text-white transition duration-200 bg-violet-500 rounded-lg hover:bg-violet-700 ease"
 									data-primary="violet-500" data-rounded="rounded-lg">Create Account</a>
 							</div>
@@ -62,19 +65,20 @@
 <script lang="ts" setup>
 
 	import { createClient } from '@supabase/supabase-js'
-	import { useRouter } from 'vue-router';
-
 	//console.log(process.env.VUE_APP_SUPABASE_URL, process.env.VUE_APP_SUPABASE_KEY)
 	const supabase = createClient("https://vxnlmkevkguycioscpzk.supabase.co", 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4bmxta2V2a2d1eWNpb3NjcHprIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTAzNjU0MDIsImV4cCI6MjAwNTk0MTQwMn0.Ayw39t5Ax8lXsW8DfZOcUoeUgbQaZkOBLH--i-3p4qo')
 
-	async function createAccount() {
+	let email = ref('');
+	let password = ref('');
 
-		if(!isEmailValid())
+	async function createAccount(email: string, password: string) {
+
+		if(!isEmailValid(email))
 			alert('Invalid email address')
 
 		else {
 
-			if(!isPasswordValid())
+			if(!isPasswordValid(password))
 				alert('Your password must be at least 8 character long')
 
 			else {
@@ -85,65 +89,79 @@
 				})
 
 				if(!error) {
-					await supabase.auth.signInWithPassword({
+
+					let response = await supabase.auth.signInWithPassword({
 						email: (document.getElementById("emailInput") as HTMLInputElement).value,
 						password: (document.getElementById("passwordInput") as HTMLInputElement).value,
 					})
 
-					window.location.href = window.location.origin + "/";
+					if(!response.error) {
+
+						let userResponse = await supabase.auth.getUser();
+
+						if(userResponse.data.user?.email) {
+							let createProfileReponse = await supabase.rpc(
+								'insert_musician_if_not_exists', {
+									useremail: userResponse.data.user.email
+								}
+							)
+							if(createProfileReponse.error)
+								alert('Something went wrong when creating your musician profile. Please contact an administrator.')
+						}
+
+						window.location.href = window.location.origin + "/";
+					}
 				}
 			}
 		}
 	}
 
-	function checkEmail() {
+	function checkEmail(email: string) {
 
 		let emailDiv = <HTMLElement>document.getElementById("emailInput");
 
-		console.log(isEmailEmpty())
-		if(isEmailEmpty()) {
+		if(isEmailEmpty(email)) {
 			emailDiv.className = 'block w-full px-4 py-2 mt-2 text-lg placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-opacity-50'
 			return
 		}
 
-
-		if(!isEmailValid())
+		if(!isEmailValid(email))
 			emailDiv.className = 'ring-opacity-75 ring-2 ring-red-600 block w-full px-4 py-2 mt-2 text-lg placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50'
 		
-		if(isEmailValid())
+		if(isEmailValid(email))
 			emailDiv.className = 'ring-opacity-75 ring-2 ring-green-600 block w-full px-4 py-2 mt-2 text-lg placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-opacity-50'
 	}
 
-	function checkPassword() {
+	function checkPassword(password: string) {
 
 		let emailDiv = <HTMLElement>document.getElementById("passwordInput");
 
-		if(isPasswordEmpty()) {
+		if(isPasswordEmpty(password)) {
 			emailDiv.className = 'block w-full px-4 py-2 mt-2 text-lg placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-opacity-50'
 			return
 		}
 
-		if(!isPasswordValid())
+		if(!isPasswordValid(password))
 			emailDiv.className = 'ring-opacity-75 ring-2 ring-red-600 block w-full px-4 py-2 mt-2 text-lg placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50'
 
-		if(isPasswordValid())
+		if(isPasswordValid(password))
 			emailDiv.className = 'ring-opacity-75 ring-2 ring-green-600 block w-full px-4 py-2 mt-2 text-lg placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-opacity-50'
 	}
 
-	function isEmailValid() : boolean {
-		return (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test((document.getElementById("emailInput") as HTMLInputElement).value))
+	function isEmailValid(email: string) : boolean {
+		return (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email));
 	}
 
-	function isEmailEmpty() : boolean {
-		return (document.getElementById("emailInput") as HTMLInputElement).value.length == 0
+	function isEmailEmpty(email: string) : boolean {
+		return email.length == 0;
 	}
 
-	function isPasswordValid() : boolean {
-		return (document.getElementById("passwordInput") as HTMLInputElement).value.length >= 8
+	function isPasswordValid(password: string) : boolean {
+		return password.length >= 8;
 	}
 
-	function isPasswordEmpty() : boolean {
-		return (document.getElementById("passwordInput") as HTMLInputElement).value.length == 0
+	function isPasswordEmpty(password: string) : boolean {
+		return password.length == 0;
 	}
 
 </script>

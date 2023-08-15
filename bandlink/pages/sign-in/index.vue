@@ -30,7 +30,8 @@
 							<div class="relative">
 								<label class="font-medium text-gray-900">Email</label>
 								<input type="text"
-									id="emailInput"
+									@keyup.enter="logIn()" 
+									v-model="email"
 									class="block w-full px-4 py-2 mt-2 text-lg placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-opacity-50"
 									data-primary="blue-600" data-rounded="rounded-lg"
 									placeholder="Enter Your Email Address" />
@@ -38,13 +39,13 @@
 							<div class="relative">
 								<label class="font-medium text-gray-900">Password</label>
 								<input type="password"
-									id="passwordInput"
+									@keyup.enter="logIn()" 
+									v-model="password"
 									class="block w-full px-4 py-2 mt-2 text-lg placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-opacity-50"
 									data-primary="blue-600" data-rounded="rounded-lg" placeholder="Password" />
 							</div>
 							<div class="relative">
 								<a href="#_"
-									@keyup.enter="logIn()" 
 									@click="logIn()"
 									class="inline-block w-full px-5 py-4 text-lg font-medium text-center text-white transition duration-200 bg-violet-500 rounded-lg hover:bg-violet-700 ease"
 									data-primary="violet-500" data-rounded="rounded-lg">Log in</a>
@@ -64,38 +65,42 @@
 	//console.log(process.env.VUE_APP_SUPABASE_URL, process.env.VUE_APP_SUPABASE_KEY)
 	const supabase = createClient("https://vxnlmkevkguycioscpzk.supabase.co", 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4bmxta2V2a2d1eWNpb3NjcHprIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTAzNjU0MDIsImV4cCI6MjAwNTk0MTQwMn0.Ayw39t5Ax8lXsW8DfZOcUoeUgbQaZkOBLH--i-3p4qo')
 
+	let email = ref('');
+	let password = ref('');
+
 	async function logIn() {
 
-		let isAuthenticated = await signInWithPassword();
+		let isAuthenticated = await signInWithPassword(email.value, password.value);
 
 		if(isAuthenticated) {
 
 			const { data: { user } } = await supabase.auth.getUser()
 
 			if(user) {
+
+				console.log(user.email)
+
 				const { data, error } = await supabase.rpc(
 					'insert_musician_if_not_exists', {
     				useremail: user.email
   				})
-
-				console.log(data, error)
 			}
-
-			console.log('reload')
-			//location.reload()		
+			window.location.href = location.origin + '/my-bands';
 		}
 	}
 
-	async function signInWithPassword(): Promise<boolean> {
+	async function signInWithPassword(email: string, password: string): Promise<boolean> {
 		const { data, error } = await supabase.auth.signInWithPassword({
-			email: (document.getElementById("emailInput") as HTMLInputElement).value,
-			password: (document.getElementById("passwordInput") as HTMLInputElement).value,
+			email: email,
+			password: password,
 		})
 
 		if(!error)
 			return true
-		else
+		else {
+			alert('Invalid credententials')
 			return false
+		}
 	}
 
 </script>

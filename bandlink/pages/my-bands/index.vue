@@ -5,7 +5,7 @@
 				+ Create a band
 			</div>
 			<Transition>
-				<BandPopup v-if="showPopup" @close="closePopup" class="" :isEditable="false" :isCreation="true" :bandId="0"></BandPopup>
+				<BandPopup v-show="showPopup" @close="closePopup" class="" :isEdition="false" :isCreation="true" :bandId="0"></BandPopup>
 			</Transition>
 		</div>
 	</section>
