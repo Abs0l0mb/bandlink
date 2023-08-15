@@ -44,6 +44,7 @@
 							</div>
 							<div class="relative">
 								<a href="#_"
+									@keyup.enter="logIn()" 
 									@click="logIn()"
 									class="inline-block w-full px-5 py-4 text-lg font-medium text-center text-white transition duration-200 bg-violet-500 rounded-lg hover:bg-violet-700 ease"
 									data-primary="violet-500" data-rounded="rounded-lg">Log in</a>
@@ -65,13 +66,36 @@
 
 	async function logIn() {
 
+		let isAuthenticated = await signInWithPassword();
+
+		if(isAuthenticated) {
+
+			const { data: { user } } = await supabase.auth.getUser()
+
+			if(user) {
+				const { data, error } = await supabase.rpc(
+					'insert_musician_if_not_exists', {
+    				useremail: user.email
+  				})
+
+				console.log(data, error)
+			}
+
+			console.log('reload')
+			//location.reload()		
+		}
+	}
+
+	async function signInWithPassword(): Promise<boolean> {
 		const { data, error } = await supabase.auth.signInWithPassword({
 			email: (document.getElementById("emailInput") as HTMLInputElement).value,
 			password: (document.getElementById("passwordInput") as HTMLInputElement).value,
 		})
 
 		if(!error)
-			location.reload()		
+			return true
+		else
+			return false
 	}
 
 </script>
