@@ -12,7 +12,6 @@
 								<label class="font-medium text-gray-900">Name</label>
 								<input type="text"
 									v-model="bandNameInput"
-									id="bandNameInput"
 									class="block w-full px-4 py-2 mt-2 text-lg placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-opacity-50"
 									data-primary="blue-600" data-rounded="rounded-lg"
 									placeholder="Band" />
@@ -20,8 +19,8 @@
 							<div class="relative">
 								<label class="font-medium text-gray-900">Bio</label>
 								<textarea
+									v-model="bandBioInput"
 									style="resize: none;"
-									id="bandBioInput"
 									class="block w-full h-[20vh] px-4 py-2 mt-2 text-lg placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-opacity-50"
 									data-primary="blue-600" data-rounded="rounded-lg" placeholder="Bio"></textarea>
 							</div>
@@ -49,15 +48,24 @@
 	const supabase = createClient("https://vxnlmkevkguycioscpzk.supabase.co", 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4bmxta2V2a2d1eWNpb3NjcHprIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTAzNjU0MDIsImV4cCI6MjAwNTk0MTQwMn0.Ayw39t5Ax8lXsW8DfZOcUoeUgbQaZkOBLH--i-3p4qo')
 
 	defineProps({
+		isCreation: Boolean,
 		isEditable: Boolean,
 		bandId: Number,
 	})
 
 	const bandNameInput = ref('')
-	
-    let { data, error } = await supabase.rpc('create_band_and_return_id', { band_name: bandNameInput.value,  })
+	const bandBioInput = ref('')
 
-
+	async function createBand() {
+		let { data, error } = await supabase
+		.rpc('create_band_and_return_id', {
+			announcement_text: "", 
+			band_name: bandNameInput.value, 
+			bio_text: bandBioInput.value 
+		})
+		console.log(data)
+		console.log(error)
+	}
 
 </script>
 

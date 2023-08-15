@@ -89,6 +89,7 @@
 						email: (document.getElementById("emailInput") as HTMLInputElement).value,
 						password: (document.getElementById("passwordInput") as HTMLInputElement).value,
 					})
+
 					window.location.href = window.location.origin + "/";
 				}
 			}

@@ -66,13 +66,36 @@
 
 	async function logIn() {
 
+		let isAuthenticated = await signInWithPassword();
+
+		if(isAuthenticated) {
+
+			const { data: { user } } = await supabase.auth.getUser()
+
+			if(user) {
+				const { data, error } = await supabase.rpc(
+					'insert_musician_if_not_exists', {
+    				useremail: user.email
+  				})
+
+				console.log(data, error)
+			}
+
+			console.log('reload')
+			//location.reload()		
+		}
+	}
+
+	async function signInWithPassword(): Promise<boolean> {
 		const { data, error } = await supabase.auth.signInWithPassword({
 			email: (document.getElementById("emailInput") as HTMLInputElement).value,
 			password: (document.getElementById("passwordInput") as HTMLInputElement).value,
 		})
 
 		if(!error)
-			location.reload()		
+			return true
+		else
+			return false
 	}
 
 </script>
