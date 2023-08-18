@@ -12,76 +12,50 @@
     </div>
 </template>
 
-<script>
+<script setup>
 
+    //import { emit } from 'process';
     import {ref, computed, defineProps} from 'vue'
-    import FilterItem from "./FilterItem"
 
-    export default {
+    const props = defineProps({
+        items: Array,
+        key: String
+    })
 
-        props: {
-            items: {
-                type: Array,
-                required: true
-            },
-            key: {
-                type: String,
-                required: true
-            }
-        },
-        components: {
-            FilterItem
-        },
+    let items = props.items
 
-        setup(props) {
+    let searchTerm = ref('')
 
-            //document.getElementById('search').placeholder = props.key;
+    let filters = ref([])
 
-            let items = props.items
+    const searchItems = computed(() => {
 
-            let searchTerm = ref('')
-
-            let filters = ref([])
-
-            const searchItems = computed(() => {
-
-                if (searchTerm.value === '') {
-                    return []
-                }
-
-                let matches = 0
-
-                return items.filter(item => {
-
-                    if (item.name.toLowerCase().includes(searchTerm.value.toLowerCase()) && matches < 10) {
-                        
-                        matches++
-                        
-                        return item
-                    }
-                })
-            })
-
-            const selectItem = async (item) => {
-
-                filters.value.push({name: item.name})
-
-                console.log(filters._rawValue);
-
-                //const { data } = await useFetch('/api/test')
-                
-                //console.log(data)
-            }
-            
-            let selectedItem = ref('')
-
-            return {
-                items,
-                searchTerm,
-                searchItems,
-                selectItem,
-                selectedItem
-            }
+        if (searchTerm.value === '') {
+            return []
         }
+
+        let matches = 0
+
+        return items.filter(item => {
+
+            if (item.name.toLowerCase().includes(searchTerm.value.toLowerCase()) && matches < 10) {
+                
+                matches++;
+                
+                return item;
+            }
+        })
+    })
+
+    const selectItem = async (item) => {
+
+        filters.value.push({name: item.name});
+
+        console.log(filters._rawValue);
+
+        //emit('addedStyleFilter', item);
     }
+    
+    let selectedItem = ref('')
+
 </script>

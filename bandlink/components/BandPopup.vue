@@ -3,10 +3,9 @@
 		<div class="bg-white rounded-lg p-8 shadow-lg z-100 w-9/12">
 			<!-- Add your content for the popup card here -->
 			<slot>
-
 				<div class="w-full bg-white">
-					<div class="flex flex-col items-start justify-start w-full h-full p-4">
-						<h4 class="w-full text-3xl font-bold">Create your band</h4>
+					<h4 class="w-full text-3xl text-center font-bold">Create your band</h4>
+					<div class="flex items-start justify-start w-full h-full p-4">
 						<div class="relative w-full mt-4 space-y-8">
 							<div class="relative">
 								<label class="font-medium text-gray-900">Name</label>
@@ -24,6 +23,10 @@
 									class="block w-full h-[20vh] px-4 py-2 mt-2 text-lg placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-opacity-50"
 									data-primary="blue-600" data-rounded="rounded-lg" placeholder="Bio"></textarea>
 							</div>
+							<div class="relative w-6/12">
+								<label class="font-medium text-gray-900">Styles</label>
+								<ItemList :items="stylesResponse.data" key="Styles" class="w-4/12"></ItemList>
+							</div>
 							<div class="relative" @click="createBand(); $emit('close')">
 								<a href="#_"
 									class="inline-block w-full px-5 py-4 text-lg font-medium text-center text-white transition duration-200 bg-violet-500 rounded-lg hover:bg-violet-700 ease"
@@ -32,7 +35,6 @@
 						</div>
 					</div>
 				</div>
-
 			</slot>
 			<!-- Add a close button or any other UI elements if needed -->
 			<button @click="$emit('close')" class="mt-4 px-4 py-2 bg-violet-500 text-white rounded-lg">
@@ -77,5 +79,13 @@
 		//bandBioInput.value = bandBio
 	}
 
-</script>
+	let stylesResponse = await supabase.rpc('get_styles_by_language', {
+		lang: 'ENG'
+	});
 
+	if(stylesResponse.error)
+		console.log(stylesResponse.error)
+	else
+		console.log(stylesResponse.data);
+
+</script>
