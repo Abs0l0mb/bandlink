@@ -1,11 +1,11 @@
 <template>
-	
 	<div @click="showSideBar = !showSideBar" class="cursor-pointer fixed h-[5vh] w-[5vh] bg-black ml-5 mt-5 rounded-lg">
 
 	</div>
 
 	<Transition name="lToRFade">
-		<div v-if="showSideBar" id="sideBar" class="transition-all mt-20 ml-5 rounded-xl bg-black w-2/12 h-[500px] p-3 fixed duration-250">
+		<div v-if="showSideBar" id="sideBar"
+			class="transition-all mt-20 ml-5 rounded-xl bg-black w-2/12 h-[500px] p-3 fixed duration-250">
 		</div>
 	</Transition>
 
@@ -15,9 +15,15 @@
 				<p class="w-8/12 text-5xl font-semibold">Bands</p>
 			</div>
 		</div>
+		<div class="space-y-3">
+			<ItemCard @click="openPopup()" class="transition-all">
+			</ItemCard>
+			<ItemCard @click="openPopup()" class="transition-all">
+			</ItemCard>
+			<ItemCard @click="openPopup()" class="transition-all">
+			</ItemCard>
+		</div>
 
-		<ItemCard @click="openPopup()" class="hover:scale-[1.02] transition-all duration-400">
-		</ItemCard>
 
 		<Transition>
 			<PopupCard v-if="showPopup" @close="closePopup" class="">
@@ -27,34 +33,34 @@
 </template>
 
 <style scoped>
-	.lToRFade-enter-active,
-	.lToRFade-leave-active {
-		transition: all 0.25s ease;
-	}
+.lToRFade-enter-active,
+.lToRFade-leave-active {
+	transition: all 0.25s ease;
+}
 
-	.lToRFade-enter-from,
-	.lToRFade-leave-to {
-		opacity: 0;
-		transform: translateX(-20px);
-	}
+.lToRFade-enter-from,
+.lToRFade-leave-to {
+	opacity: 0;
+	transform: translateX(-20px);
+}
 </style>
 
 <script setup lang="ts">
 
-	let showSideBar = ref(false)
+let showSideBar = ref(false)
 
-	import PopupCard from '~/components/PopupCard.vue';
+import PopupCard from '~/components/PopupCard.vue';
 
-	let showPopup = ref(false);
+let showPopup = ref(false);
 
-	function openPopup() {
-		showPopup.value = true;
-		console.log(showPopup)
-	}
-	function closePopup() {
-		showPopup.value = false;
-	}
-	
+function openPopup() {
+	showPopup.value = true;
+	console.log(showPopup)
+}
+function closePopup() {
+	showPopup.value = false;
+}
+
 </script>
 
 <style>

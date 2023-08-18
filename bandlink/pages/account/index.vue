@@ -1,84 +1,73 @@
 <template>
-	<section class="h-[640px] bg-white tails-selected-element">
-		<div class="max-w-7xl px-5 py-20 flex flex-col space-y-5 w-full h-full items-center justify-center mx-auto">
-			<div class="flex h-full w-full bg-gray-300 rounded-md">
-
-				<div class="relative group cursor-pointer">
-					<img class="object-cover rounded-full border-2 border-black group-hover:opacity-30 duration-250"
-						style="width: 10vw; height: 10vw" src="../../assets/images/image01.png" />
-					<div
-						class="opacity-0 group-hover:opacity-100 duration-300 absolute flex text-xs text-black font-semibold inset-0 flex items-center justify-center text-center">
-						Changer photo
-					</div>
-				</div>
-
-				<p class="w-7/12 text-5xl text-black font-semibold">
-					{{ musician.name }}
-				</p>
-
-				<input type="checkbox" id="react-option" value="" class="hidden peer" required="" />
-				<label id="lookingButton" for="react-option" @click="updateLookingForBands()"
-					class="inline-flex items-center p-5 border-2 border-violet-500 text-white rounded-lg cursor-pointer duration-500 hover:bg-violet-600 bg-violet-500">
-					<div class="block flex gap-6">
-						<img class="h-6 w-6" src="../../assets/images/loupe.png" />
-						<div class="w-full text-lg font-semibold" id="lookingButtonText">
-							Look for a band
+	<div class="max-w-7xl px-5 flex flex-col space-y-5 w-full h-full items-center justify-center mx-auto">
+		<div class="items-center flex">
+			<div class="w-full mt-12 lg:flex">
+				<div class="flex flex-col items-start justify-start w-full h-auto lg:w-1/3">
+					<div class="flex items-center justify-center">
+						<div
+							class="w-16 h-16 mr-4 overflow-hidden bg-gray-200 rounded-full ring-violet-500 ring-2 ring-offset-2">
+							<img src="../../assets/images/imageMain.jpg" class="object-cover w-full h-full">
 						</div>
-					</div>
-				</label>
-			</div>
-
-			<div class="flex space-x-5 w-full h-full">
-				<div class="h-full w-full bg-gray-300 rounded-md">
-					<h1 class="px-2 font-semibold text-3xl text-gray-900">Instruments</h1>
-
-					<div class="gap-2 p-3">
-						<div class="rounded-md text-center bg-gray-800 text-white px-2 hover:bg-slate-600 duration-300"
-							v-for="instrument in musician.instruments" :key="instrument">
-							{{ instrument }}
-						</div>
-					</div>
-				</div>
-				<div class="flex h-full w-full bg-gray-300 rounded-md">
-					<h1 class="font-semibold text-3xl text-gray-900">Styles</h1>
-
-					<div class="flex gap-2 py-5">
-						<div class="rounded-md text-center bg-auto bg-gray-800 text-white px-2 hover:bg-slate-600 duration-300"
-							v-for="style in musician.styles" :key="stlye">
-							{{ style }}
+						<div class="flex flex-col items-start justify-center">
+							<h4 class="font-bold text-xl text-gray-800">Absolomb</h4>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</section>
+		<div class="max-w-7xl px-5 py-10 flex space-x-5 w-full h-full items-center justify-center mx-auto">
+			<div class="flex flex-col space-y-5 w-full h-full">
+				<div
+					class="relative w-full px-6 py-6 mx-auto bg-white border border-gray-200 rounded-lg sm:px-8 md:px-12 sm:py-8 sm:shadow lg:w-5/6 xl:w-2/3">
+					<button
+						class="absolute top-4 right-4 px-2 py-1 text-sm text-white bg-violet-500 hover:bg-violet-600 rounded-lg duration-300"
+						@click="">
+
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+							stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+							class="lucide lucide-pen">
+							<path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+						</svg>
+					</button>
+					<h3 class="text-lg font-bold text-purple-500 sm:text-xl md:text-2xl">
+						Bio
+					</h3>
+					<p class="mt-2 text-base text-gray-600 sm:text-lg md:text-normal">
+						Je joue depuis maintenant 3 ans du ukulélé, je maitrise quatorze accords et j'aime par
+						dessus tout le son de la guimbarde.
+					</p>
+				</div>
+				<div
+					class="relative w-full px-6 py-6 mx-auto mt-10 bg-white border border-gray-200 rounded-lg sm:px-8 md:px-12 sm:py-8 sm:shadow lg:w-5/6 xl:w-2/3">
+					<h3 class="text-lg font-bold text-purple-500 sm:text-xl md:text-2xl">
+						Past experiences jsp
+					</h3>
+					<p class="mt-2 text-base text-gray-600 sm:text-lg md:text-normal">1994 - j'ai joué pour la bo de
+						adibou</p>
+
+				</div>
+			</div>
+			<div class="flex flex-col space-y-5 w-full h-full">
+				<div
+					class="relative w-full px-6 py-6 mx-auto mt-10 bg-white border border-gray-200 rounded-lg sm:px-8 md:px-12 sm:py-8 sm:shadow lg:w-5/6 xl:w-2/3">
+					<h3 class="text-lg font-bold text-purple-500 sm:text-xl md:text-2xl">
+						Instruments
+					</h3>
+					<p class="mt-2 text-base text-gray-600 sm:text-lg md:text-normal">
+						Blablablablabla
+					</p>
+				</div>
+				<div
+					class="relative w-full px-6 py-6 mx-auto mt-10 bg-white border border-gray-200 rounded-lg sm:px-8 md:px-12 sm:py-8 sm:shadow lg:w-5/6 xl:w-2/3">
+					<h3 class="text-lg font-bold text-purple-500 sm:text-xl md:text-2xl">
+						Styles
+					</h3>
+					<p class="mt-2 text-base text-gray-600 sm:text-lg md:text-normal">
+						Blablablablabla
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
-
-<script setup>
-let clicked = false;
-
-let musician = {
-	name: "Absolomb",
-	instruments: ["guitare", "piano", "contrebasse"],
-	styles: ["metal", "rock", "jazz", "classique", "batucada brésilienne"],
-};
-
-function updateLookingForBands() {
-	let button = document.getElementById("lookingButton");
-	let buttonText = document.getElementById("lookingButtonText");
-
-	if (clicked) {
-		clicked = false;
-		button.className =
-			"inline-flex items-center justify-between p-5 border-2 border-violet-500 text-white rounded-lg cursor-pointer hover:bg-violet-600 duration-500 bg-violet-500";
-		buttonText.textContent = "Look for a band";
-	} else {
-		clicked = true;
-		button.className =
-			"inline-flex items-center justify-between p-5 border-2 border-violet-500 rounded-lg cursor-pointer duration-500 text-black bg-violet-100 hover:bg-violet-200";
-		buttonText.textContent = "Looking for a band";
-	}
-
-	updateLookingForBands();
-}
-</script>
+  
