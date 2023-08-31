@@ -1,13 +1,13 @@
 <template>
     <div class="w-full rounded-lg mt-2">
-        <input @focusout="" v-model="searchTerm" class="mb-1 w-full bg-gray-200 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-opacity-50" type="text" id="search">
+        <input autocomplete="off" @focusout="clearSearchTerm()" v-model="searchTerm" class="mb-1 w-full bg-gray-200 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-opacity-50" type="text" id="search">
         <ul v-if="searchItems.length" class="absolute rounded-md w-full z-50">
             <li class="bg-gray-200 hover:bg-gray-400 active:bg-slate-500 cursor-pointer px-1" v-for="item in searchItems" :key="item.name" @click="selectItem(item)">
                 {{ item.name }}
             </li>
         </ul>
-        <div class="flex gap-1" id="filters"> 
-            <div class="bg-gray-200 rounded-md py-1 px-2 w-fit" v-for="filter in filters" :key="filter.name"> {{ filter.name }}</div>
+        <div class="flex flex-wrap gap-1" id="filters"> 
+            <div class="bg-gray-200 rounded-md py-1 px-2 w-fit" v-for="filter in filters" :key="filter.name"> {{ filter.name }} <span class="px-1 cursor-pointer hover:bg-slate-300" @click="deleteItem(filter)">x</span></div>
         </div>
     </div>
 </template>
@@ -47,6 +47,12 @@
         })
     })
 
+    const clearSearchTerm = () => {
+        setTimeout(() => {
+            searchTerm.value = "";
+        }, 100);
+    }
+
     const selectItem = async (item) => {
 
         let isAlreadyInList = false;
@@ -60,9 +66,17 @@
             filters.value.push({name: item.name});
         searchTerm.value = "";
 
-        //emit('addedFilter', item);
+        //emit('refreshFilters', filters);
     }
     
+    const deleteItem = (item) => {
+        for(let i = 0; i < filters.value.length; i++) {
+            if(filters.value[i].name == item.name)
+                filters.value.splice(i, 1);
+                //emit('refreshFilters', filters)  
+        }
+    }
+
     let selectedItem = ref('')
 
 </script>

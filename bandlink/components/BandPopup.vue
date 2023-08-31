@@ -23,10 +23,17 @@
 									class="block w-full h-[20vh] px-4 py-2 mt-2 text-lg placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-opacity-50"
 									data-primary="blue-600" data-rounded="rounded-lg" placeholder="Bio"></textarea>
 							</div>
-							<div class="relative w-6/12">
-								<label class="font-medium text-gray-900">Styles</label>
-								<ItemList :items="stylesResponse.data" key="Styles" class="w-4/12"></ItemList>
+							<div class="flex gap-x-4">
+								<div class="relative w-6/12">
+									<label class="font-medium text-gray-900">Styles</label>
+									<ItemList :items="stylesResponse.data" key="Styles" class="w-4/12"></ItemList>
+								</div>
+								<div class="relative w-6/12">
+									<label class="font-medium text-gray-900">Searching for</label>
+									<ItemList :items="musiciansResponse.data" key="Styles" class="w-4/12"></ItemList>
+								</div>
 							</div>
+
 							<div class="relative" @click="createBand(); $emit('close')">
 								<a href="#_"
 									class="inline-block w-full px-5 py-4 text-lg font-medium text-center text-white transition duration-200 bg-violet-500 rounded-lg hover:bg-violet-700 ease"
@@ -82,10 +89,15 @@
 	let stylesResponse = await supabase.rpc('get_styles_by_language', {
 		lang: 'ENG'
 	});
-
+	
 	if(stylesResponse.error)
-		console.log(stylesResponse.error)
-	else
-		console.log(stylesResponse.data);
+		console.log(stylesResponse.error);
+
+	let musiciansResponse = await supabase.rpc('get_musicians_by_language', {
+		lang: 'ENG'
+	});
+
+	if(musiciansResponse.error)
+		console.log(musiciansResponse.error);
 
 </script>
