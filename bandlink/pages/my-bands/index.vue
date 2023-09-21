@@ -13,14 +13,30 @@
 
 <script lang="ts" setup>
 
-	let showPopup = ref(false);
+	import { createClient } from '@supabase/supabase-js'
+	const supabase = createClient("https://vxnlmkevkguycioscpzk.supabase.co", 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4bmxta2V2a2d1eWNpb3NjcHprIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTAzNjU0MDIsImV4cCI6MjAwNTk0MTQwMn0.Ayw39t5Ax8lXsW8DfZOcUoeUgbQaZkOBLH--i-3p4qo')
+	const userSession = await supabase.auth.getSession()
+
+	let bandsData = ref([])
+	getBands()
+	let showPopup = ref(false)
 
 	function openPopup() {
-		showPopup.value = true;
+		showPopup.value = true
 		console.log('open')
 	}
 	function closePopup() {
-		showPopup.value = false;
+		showPopup.value = false
+	}
+
+	async function getBands() {
+		let { data, error } = await supabase
+		.rpc('get_bands_by_user', {
+			email: userSession.data.session?.user.email
+
+		})
+		console.log(data)
+		console.log(error)
 	}
 
 </script>

@@ -26,11 +26,11 @@
 							<div class="flex gap-x-4">
 								<div class="relative w-6/12">
 									<label class="font-medium text-gray-900">Styles</label>
-									<ItemList :items="stylesResponse.data" key="Styles" class="w-4/12"></ItemList>
+									<ItemList :items="stylesResponse.data" key="Styles" @added-item-to-list="addStyle" @removed-item-from-list="removeStyle" class="w-4/12"></ItemList>
 								</div>
 								<div class="relative w-6/12">
 									<label class="font-medium text-gray-900">Searching for</label>
-									<ItemList :items="musiciansResponse.data" key="Styles" class="w-4/12"></ItemList>
+									<ItemList :items="musiciansResponse.data" key="Styles" @added-item-to-list="addMusician" @removed-item-from-list="removeMusician" class="w-4/12"></ItemList>
 								</div>
 							</div>
 
@@ -62,29 +62,17 @@
 		bandId: Number,
 	})
 
+	const userSession = await supabase.auth.getSession();
+	
 	const areInputDisabbled = ref((!props.isCreation && !props.isEdition) ? false: true);
 	const bandNameInput = ref('');
 	const bandBioInput = ref('');
 
+	let bandStyleList: number[] = []
+	let bandMusicianList: number[] = []
+
 	if(!props.isCreation)
 		fetchAndDisplayInfos();
-
-	async function createBand() {
-		let { data, error } = await supabase
-		.rpc('create_band_and_return_id', {
-			announcement_text: "", 
-			band_name: bandNameInput.value, 
-			bio_text: bandBioInput.value 
-		})
-		console.log(data)
-		console.log(error)
-	}
-
-	async function fetchAndDisplayInfos() {
-		//fetch band infos with id of props
-		//bandNameInput.value = bandName
-		//bandBioInput.value = bandBio
-	}
 
 	let stylesResponse = await supabase.rpc('get_styles_by_language', {
 		lang: 'ENG'
@@ -100,4 +88,41 @@
 	if(musiciansResponse.error)
 		console.log(musiciansResponse.error);
 
+
+	function addStyle(style: {style_id: number, name: string}) {
+		bandStyleList.push(style.style_id)
+	}
+
+	function removeStyle(style: {style_id: number, name: string}) {
+		bandStyleList.splice(bandStyleList.findIndex(style_id => { return style_id == style.style_id }), 1)
+	}
+
+	function addMusician(musician: {musician_id: number, name: string}) {
+		bandMusicianList.push(musician.musician_id)
+	}
+
+	function removeMusician(musician: {musician_id: number, name: string}) {
+		bandMusicianList.splice(bandMusicianList.findIndex(musician_id => { return musician_id == musician.musician_id }), 1)
+	}
+
+	async function createBand() {
+		let { data, error } = await supabase
+		.rpc('create_band_and_return_id', {
+			announcement_text: "", 
+			band_name: bandNameInput.value, 
+			bio_text: bandBioInput.value,
+			rehearsal_frequency: 1,
+			styles: bandStyleList,
+			musicians: bandMusicianList,
+			admin_mail: userSession.data.session?.user.email
+		})
+		console.log(data)
+		console.log(error)
+	}
+
+	async function fetchAndDisplayInfos() {
+		//fetch band infos with id of props
+		//bandNameInput.value = bandName
+		//bandBioInput.value = bandBio
+	}
 </script>

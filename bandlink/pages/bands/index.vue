@@ -16,12 +16,12 @@
 			</div>
 		</div>
 		<div class="space-y-3">
-			<ItemCard @click="openPopup()" class="transition-all">
-			</ItemCard>
-			<ItemCard @click="openPopup()" class="transition-all">
-			</ItemCard>
-			<ItemCard @click="openPopup()" class="transition-all">
-			</ItemCard>
+			<BandCard @click="openPopup()" class="transition-all">
+			</BandCard>
+			<BandCard @click="openPopup()" class="transition-all">
+			</BandCard>
+			<BandCard @click="openPopup()" class="transition-all">
+			</BandCard>
 		</div>
 
 

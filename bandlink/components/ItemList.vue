@@ -6,15 +6,15 @@
                 {{ item.name }}
             </li>
         </ul>
-        <div class="flex flex-wrap gap-1" id="filters"> 
-            <div class="bg-gray-200 rounded-md py-1 px-2 w-fit" v-for="filter in filters" :key="filter.name"> {{ filter.name }} <span class="px-1 cursor-pointer hover:bg-slate-300" @click="deleteItem(filter)">x</span></div>
+        <div class="flex flex-wrap gap-1" id="listElements"> 
+            <div class="bg-gray-200 rounded-md py-1 px-2 w-fit" v-for="listElements in listElements" :key="listElements.name"> {{ listElements.name }} <span class="px-1 cursor-pointer hover:bg-slate-300" @click="deleteItem(listElements)">x</span></div>
         </div>
     </div>
 </template>
 
 <script setup>
 
-    //import { emit } from 'process';
+    const emit = defineEmits(['added-item-to-list', 'removed-item-from-list'])
     import {ref, computed, defineProps} from 'vue'
 
     const props = defineProps({
@@ -26,7 +26,7 @@
 
     let searchTerm = ref('')
 
-    let filters = ref([])
+    let listElements = ref([])
 
     const searchItems = computed(() => {
 
@@ -40,40 +40,41 @@
 
             if (item.name.toLowerCase().includes(searchTerm.value.toLowerCase()) && matches < 10) {
                 
-                matches++;
+                matches++
                 
-                return item;
+                return item
             }
         })
     })
 
     const clearSearchTerm = () => {
         setTimeout(() => {
-            searchTerm.value = "";
-        }, 100);
+            searchTerm.value = ""
+        }, 100)
     }
 
     const selectItem = async (item) => {
 
-        let isAlreadyInList = false;
+        let isAlreadyInList = false
 
-        for(let value of filters._rawValue) {
+        for(let value of listElements._rawValue) {
             if(value.name == item.name)
                 isAlreadyInList = true
         }
 
-        if(!isAlreadyInList)
-            filters.value.push({name: item.name});
-        searchTerm.value = "";
-
-        //emit('refreshFilters', filters);
+        if(!isAlreadyInList) {
+            listElements.value.push(item)
+            emit('added-item-to-list', item)
+        }
+        searchTerm.value = ""
     }
     
     const deleteItem = (item) => {
-        for(let i = 0; i < filters.value.length; i++) {
-            if(filters.value[i].name == item.name)
-                filters.value.splice(i, 1);
-                //emit('refreshFilters', filters)  
+        for(let i = 0; i < listElements.value.length; i++) {
+            if(listElements.value[i].name == item.name) {
+                listElements.value.splice(i, 1)
+                emit('removed-item-from-list', item)
+            }
         }
     }
 
