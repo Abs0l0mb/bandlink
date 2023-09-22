@@ -16,12 +16,9 @@
 			</div>
 		</div>
 		<div class="space-y-3">
-			<BandCard @click="openPopup()" class="transition-all">
-			</BandCard>
-			<BandCard @click="openPopup()" class="transition-all">
-			</BandCard>
-			<BandCard @click="openPopup()" class="transition-all">
-			</BandCard>
+			<BandCard @click="openPopup()" class="transition-all"></BandCard>
+			<BandCard @click="openPopup()" class="transition-all"></BandCard>
+			<BandCard @click="openPopup()" class="transition-all"></BandCard>
 		</div>
 
 

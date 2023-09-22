@@ -116,6 +116,10 @@
 			musicians: bandMusicianList,
 			admin_mail: userSession.data.session?.user.email
 		})
+		if(data)
+			window.location.href = location.origin + '/my-bands';
+		else
+			//process errors
 		console.log(data)
 		console.log(error)
 	}
