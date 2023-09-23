@@ -21,12 +21,5 @@
     const props = defineProps({
         bandData: { annoucement: String, bio: String, id: Number, name:String, role_key: String, styles : Array }
     })
-
-
-    let band = {
-        name: "Iron Maiden",
-        description: "salut on est un groupe et lorem ipsum jsp quoi mais ça va être trop bien les répet et tout",
-        styles: ["Jazz", "Blues", "Rock", "Jazz", "Blues", "Afro Beat"]
-    }
 </script>
 
