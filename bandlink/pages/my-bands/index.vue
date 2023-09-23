@@ -5,12 +5,15 @@
 				+ Create a band
 			</div>
 			<Transition>
-				<BandPopup v-show="showCreationPopup" @close="closeCreationPopup" class="" :isEdition="false" :isCreation="true" :bandId="0"></BandPopup>
+				<BandCreationPopup v-show="showCreationPopup" @close="closeCreationPopup"></BandCreationPopup>
+			</Transition>
+			<Transition>
+				<BandEditionPopup v-show="showEditionPopup" @close="closeEditionPopup" :bandId="bandToEditId"></BandEditionPopup>
 			</Transition>
 		</div>
 		<div class="px-20 py-5 space-y-3">
 			<div v-for="bandData in bandsData">
-				<BandCard :bandData="bandData"></BandCard>
+				<BandCard :bandData="bandData" class="cursor-pointer" @click="openEditionPopup(bandData.id)"></BandCard>
 			</div>
 		</div>
 	</section>
@@ -22,9 +25,13 @@
 	const supabase = createClient("https://vxnlmkevkguycioscpzk.supabase.co", 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4bmxta2V2a2d1eWNpb3NjcHprIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTAzNjU0MDIsImV4cCI6MjAwNTk0MTQwMn0.Ayw39t5Ax8lXsW8DfZOcUoeUgbQaZkOBLH--i-3p4qo')
 	const userSession = await supabase.auth.getSession()
 
-	let bandsData = ref([])
-	getBands(bandsData)
+	let bandsData = ref<Band[]>([])
+
 	let showCreationPopup = ref(false)
+	let showEditionPopup = ref(false)
+	let bandToEditId = ref(0)
+
+	getBands(bandsData)
 
 	function openCreationPopup() {
 		showCreationPopup.value = true
@@ -34,12 +41,13 @@
 		showCreationPopup.value = false
 	}
 
-	function openEditionPopup() {
-		showCreationPopup.value = true
+	function openEditionPopup(bandId: number) {
+		showEditionPopup.value = true
+		bandToEditId.value = bandId
 	}
 
 	function closeEditionPopup() {
-		showCreationPopup.value = false
+		showEditionPopup.value = false
 	}
 
 	async function getBands(bandsData: any) {
@@ -49,9 +57,17 @@
 			email: userSession.data.session?.user.email,
 			language: 'ENG'
 		})
-		console.log(data, error)
 
 		bandsData.value = data;
+	}
+
+	interface Band { 
+		annoucement: string, 
+		bio: string, 
+		id: number, 
+		name:string, 
+		role_key: string, 
+		styles : string[] 
 	}
 
 </script>

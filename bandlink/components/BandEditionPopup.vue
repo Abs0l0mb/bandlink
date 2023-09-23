@@ -4,7 +4,7 @@
 			<!-- Add your content for the popup card here -->
 			<slot>
 				<div class="w-full bg-white">
-					<h4 class="w-full text-3xl text-center font-bold">Create your band</h4>
+					<h4 class="w-full text-3xl text-center font-bold">EDIT DA BAND {{ props.bandId }}</h4>
 					<div class="flex items-start justify-start w-full h-full p-4">
 						<div class="relative w-full mt-4 space-y-8">
 							<div class="relative">
@@ -34,10 +34,15 @@
 								</div>
 							</div>
 
-							<div class="relative" @click="createBand(); $emit('close')">
+							<div v-if="props.isAdmin" class="relative" @click="editBand(); $emit('close')">
 								<a href="#_"
 									class="inline-block w-full px-5 py-4 text-lg font-medium text-center text-white transition duration-200 bg-violet-500 rounded-lg hover:bg-violet-700 ease"
-									data-primary="violet-500" data-rounded="rounded-lg">Create</a>
+									data-primary="violet-500" data-rounded="rounded-lg">Edit</a>
+							</div>
+							<div v-if="props.isAdmin" class="relative" @click="deleteBand()">
+								<a href="#_"
+									class="inline-block w-full px-5 py-4 text-lg font-medium text-center text-white transition duration-200 bg-violet-500 rounded-lg hover:bg-violet-700 ease"
+									data-primary="red-500" data-rounded="rounded-lg">Delete</a>
 							</div>
 						</div>
 					</div>
@@ -57,22 +62,19 @@
 	const supabase = createClient("https://vxnlmkevkguycioscpzk.supabase.co", 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4bmxta2V2a2d1eWNpb3NjcHprIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTAzNjU0MDIsImV4cCI6MjAwNTk0MTQwMn0.Ayw39t5Ax8lXsW8DfZOcUoeUgbQaZkOBLH--i-3p4qo')
 
 	const props = defineProps({
-		isCreation: Boolean,
-		isEdition: Boolean,
 		bandId: Number,
+		isAdmin: Boolean
 	})
+
+	
 
 	const userSession = await supabase.auth.getSession();
 	
-	const areInputDisabbled = ref((!props.isCreation && !props.isEdition) ? false: true);
 	const bandNameInput = ref('');
 	const bandBioInput = ref('');
 
 	let bandStyleList: number[] = []
 	let bandMusicianList: number[] = []
-
-	if(!props.isCreation)
-		fetchAndDisplayInfos();
 
 	let stylesResponse = await supabase.rpc('get_styles_by_language', {
 		lang: 'ENG'
@@ -105,16 +107,17 @@
 		bandMusicianList.splice(bandMusicianList.findIndex(musician_id => { return musician_id == musician.musician_id }), 1)
 	}
 
-	async function createBand() {
+	async function editBand() {
 		let { data, error } = await supabase
-		.rpc('create_band_and_return_id', {
+		.rpc('edit_band', {
 			announcement_text: "", 
 			band_name: bandNameInput.value, 
 			bio_text: bandBioInput.value,
 			rehearsal_frequency: 1,
 			styles: bandStyleList,
 			musicians: bandMusicianList,
-			admin_mail: userSession.data.session?.user.email
+			admin_mail: userSession.data.session?.user.email,
+			band_id: props.bandId
 		})
 		if(data)
 			window.location.href = location.origin + '/my-bands';
@@ -124,9 +127,30 @@
 		console.log(error)
 	}
 
-	async function fetchAndDisplayInfos() {
-		//fetch band infos with id of props
-		//bandNameInput.value = bandName
-		//bandBioInput.value = bandBio
+	async function deleteBand() {
+		let { data, error } = await supabase
+		.rpc('delete_band', {
+			band_id: props.bandId
+		})
+		if(data)
+			window.location.href = location.origin + '/my-bands';
+		else
+			//process errors
+		console.log(data)
+		console.log(error)
+	}
+
+	async function removeMember() {
+		let { data, error } = await supabase
+		.rpc('delete_band', {
+			band_id: props.bandId,
+			member_id: 1
+		})
+		if(data)
+			window.location.href = location.origin + '/my-bands';
+		else
+			//process errors
+		console.log(data)
+		console.log(error)
 	}
 </script>

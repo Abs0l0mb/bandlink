@@ -22,6 +22,5 @@
 const props = defineProps({
     bandData: { annoucement: String, bio: String, id: Number, name: String, role_key: String, styles: Array }
 })
-
 </script>
 
