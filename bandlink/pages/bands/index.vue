@@ -1,5 +1,6 @@
 <template>
-	<div @click="showSideBar = !showSideBar" class="cursor-pointer fixed h-[5vh] w-[5vh] bg-black ml-5 mt-5 rounded-lg">
+	<div @click="showSideBar = !showSideBar"
+		class="cursor-pointer fixed h-[5vh] w-[5vh] bg-black ml-5 mt-5 rounded-lg z-100">
 
 	</div>
 
@@ -9,23 +10,18 @@
 		</div>
 	</Transition>
 
-	<div class="px-20 py-5">
-		<div class="flex gap-10 mx-auto pb-10 pt-12 px-10">
+	<div class="px-[3vw] py-[3vh]">
+		<div class="flex gap-10 mx-auto pb-[3vh] pt-[10vh] px-10">
 			<div class="flex flex-col gap-y-8">
 				<p class="w-8/12 text-5xl font-semibold">Bands</p>
 			</div>
 		</div>
-		<div class="space-y-3">
-			<BandCard @click="openPopup()" class="transition-all"></BandCard>
-			<BandCard @click="openPopup()" class="transition-all"></BandCard>
-			<BandCard @click="openPopup()" class="transition-all"></BandCard>
+		<div class="px-[4vw] py-[3vh] space-y-[4vh] sm:pr-4">
+			<div v-for="bandData in bandsData">
+				<BandCard :bandData="bandData"></BandCard>
+			</div>
 		</div>
 
-
-		<Transition>
-			<PopupCard v-if="showPopup" @close="closePopup" class="">
-			</PopupCard>
-		</Transition>
 	</div>
 </template>
 
@@ -44,6 +40,10 @@
 
 <script setup lang="ts">
 
+import { createClient } from '@supabase/supabase-js'
+const supabase = createClient("https://vxnlmkevkguycioscpzk.supabase.co", 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4bmxta2V2a2d1eWNpb3NjcHprIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTAzNjU0MDIsImV4cCI6MjAwNTk0MTQwMn0.Ayw39t5Ax8lXsW8DfZOcUoeUgbQaZkOBLH--i-3p4qo')
+const userSession = await supabase.auth.getSession()
+
 let showSideBar = ref(false)
 
 import PopupCard from '~/components/PopupCard.vue';
@@ -57,6 +57,23 @@ function openPopup() {
 function closePopup() {
 	showPopup.value = false;
 }
+
+
+let bandsData = ref([])
+let showCreationPopup = ref(false)
+
+async function getBands(bandsData: any) {
+
+	let { data, error } = await supabase
+		.rpc('get_bands', {
+			language: 'ENG'
+		})
+	console.log(data)
+
+	bandsData.value = data;
+}
+
+getBands(bandsData)
 
 </script>
 
