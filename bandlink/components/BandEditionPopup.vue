@@ -65,9 +65,7 @@
 		bandId: Number,
 		isAdmin: Boolean
 	})
-
 	
-
 	const userSession = await supabase.auth.getSession();
 	
 	const bandNameInput = ref('');

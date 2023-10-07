@@ -8,12 +8,12 @@
 				<BandCreationPopup v-show="showCreationPopup" @close="closeCreationPopup"></BandCreationPopup>
 			</Transition>
 			<Transition>
-				<BandEditionPopup v-show="showEditionPopup" @close="closeEditionPopup" :bandId="bandToEditId"></BandEditionPopup>
+				<BandEditionPopup v-show="showEditionPopup" @close="closeEditionPopup" :bandId="bandToEditId" :isAdmin="bandToEditAdmin"></BandEditionPopup>
 			</Transition>
 		</div>
 		<div class="px-20 py-5 space-y-3">
 			<div v-for="bandData in bandsData">
-				<BandCard :bandData="bandData" class="cursor-pointer" @click="openEditionPopup(bandData.id)"></BandCard>
+				<BandCard :bandData="bandData" :isAdmin="bandData.role_key == 'administrator'" class="cursor-pointer" @click="openEditionPopup(bandData.id, bandData.role_key == 'administrator')"></BandCard>
 			</div>
 		</div>
 	</section>
@@ -30,6 +30,7 @@
 	let showCreationPopup = ref(false)
 	let showEditionPopup = ref(false)
 	let bandToEditId = ref(0)
+	let bandToEditAdmin = ref(false)
 
 	getBands(bandsData)
 
@@ -41,9 +42,10 @@
 		showCreationPopup.value = false
 	}
 
-	function openEditionPopup(bandId: number) {
+	function openEditionPopup(bandId: number, isAdmin: boolean) {
 		showEditionPopup.value = true
 		bandToEditId.value = bandId
+		bandToEditAdmin.value = isAdmin
 	}
 
 	function closeEditionPopup() {
