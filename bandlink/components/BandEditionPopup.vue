@@ -34,16 +34,19 @@
 								</div>
 							</div>
 
-							<div v-if="props.isAdmin" class="relative" @click="editBand(); $emit('close')">
-								<a href="#_"
-									class="inline-block w-full px-5 py-4 text-lg font-medium text-center text-white transition duration-200 bg-violet-500 rounded-lg hover:bg-violet-700 ease"
-									data-primary="violet-500" data-rounded="rounded-lg">Edit</a>
+							<div class="flex justify-between">
+								<div v-if="props.isAdmin" class="relative w-3/12" @click="editBand(); $emit('close')">
+									<a href="#_"
+										class="inline-block w-full px-5 py-4 text-lg font-medium text-center text-white transition duration-200 bg-violet-500 rounded-lg hover:bg-violet-700 ease"
+										data-primary="violet-500" data-rounded="rounded-lg">Edit</a>
+								</div>
+								<div v-if="props.isAdmin" class="relative w-3/12" @click="deleteBand()">
+									<a href="#_"
+										class="inline-block w-full px-5 py-4 text-lg font-medium text-center text-white transition duration-200 bg-red-500 rounded-lg hover:bg-opacity-30 ease"
+										data-primary="red-500" data-rounded="rounded-lg">Delete</a>
+								</div>
 							</div>
-							<div v-if="props.isAdmin" class="relative" @click="deleteBand()">
-								<a href="#_"
-									class="inline-block w-full px-5 py-4 text-lg font-medium text-center text-white transition duration-200 bg-violet-500 rounded-lg hover:bg-violet-700 ease"
-									data-primary="red-500" data-rounded="rounded-lg">Delete</a>
-							</div>
+
 						</div>
 					</div>
 				</div>
