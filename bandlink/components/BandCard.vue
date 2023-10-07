@@ -20,7 +20,8 @@
 
 <script setup>
     const props = defineProps({
-        bandData: { annoucement: String, bio: String, id: Number, name:String, role_key: String, styles : Array }
+        bandData: { annoucement: String, bio: String, id: Number, name:String, role_key: String, styles : Array },
+        isAdmin: Boolean
     })
 </script>
 

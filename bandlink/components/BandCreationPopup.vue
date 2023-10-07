@@ -54,6 +54,7 @@
 <script setup lang="ts">
 
 	import { createClient } from '@supabase/supabase-js'
+
 	const supabase = createClient("https://vxnlmkevkguycioscpzk.supabase.co", 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4bmxta2V2a2d1eWNpb3NjcHprIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTAzNjU0MDIsImV4cCI6MjAwNTk0MTQwMn0.Ayw39t5Ax8lXsW8DfZOcUoeUgbQaZkOBLH--i-3p4qo')
 
 	const props = defineProps({
@@ -61,7 +62,6 @@
 	})
 
 	const userSession = await supabase.auth.getSession();
-	
 	const bandNameInput = ref('');
 	const bandBioInput = ref('');
 
@@ -100,8 +100,8 @@
 	}
 
 	async function createBand() {
-		let { data, error } = await supabase
-		.rpc('create_band_and_return_id', {
+
+		let { data, error } = await supabase.rpc('create_band_and_return_id', {
 			announcement_text: "", 
 			band_name: bandNameInput.value, 
 			bio_text: bandBioInput.value,
@@ -110,10 +110,12 @@
 			musicians: bandMusicianList,
 			admin_mail: userSession.data.session?.user.email
 		})
+
 		if(data)
 			window.location.href = location.origin + '/my-bands';
 		else
 			//process errors
+		
 		console.log(data)
 		console.log(error)
 	}
