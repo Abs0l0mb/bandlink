@@ -1,52 +1,93 @@
 <template>
-    <div class="border-t bg-black w-2/12 h-screen p-3">
-        <FilterList :items="styles" key="Styles"></FilterList>
+    <div @click="showSideBar = !showSideBar"
+        class="cursor-pointer fixed h-[5vh] w-[5vh] bg-black ml-5 mt-5 rounded-lg z-100">
+
     </div>
-</template> 
 
+    <Transition name="lToRFade">
+        <div v-if="showSideBar" id="sideBar"
+            class="transition-all mt-20 ml-5 rounded-xl bg-black w-2/12 h-[500px] p-3 fixed duration-250">
+        </div>
+    </Transition>
 
-<script setup>
+    <div class="px-[3vw] py-[3vh]">
+        <div class="flex gap-10 mx-auto pb-[3vh] pt-[10vh] px-10">
+            <div class="flex flex-col gap-y-8">
+                <p class="w-8/12 text-5xl font-semibold">Musicians</p>
+            </div>
+        </div>
+        <div class="px-[3vw] py-[3vw] grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 md:grid md:columns-3">
+            <div v-for="musicianData in musiciansData">
+                <MusicianCard :musicianData="musicianData"></MusicianCard>
+            </div>
+            <div v-for="musicianData in musiciansData">
+                <MusicianCard :musicianData="musicianData"></MusicianCard>
+            </div>
+        </div>
+
+    </div>
+</template>
+
+<style scoped>
+.lToRFade-enter-active,
+.lToRFade-leave-active {
+    transition: all 0.25s ease;
+}
+
+.lToRFade-enter-from,
+.lToRFade-leave-to {
+    opacity: 0;
+    transform: translateX(-20px);
+}
+</style>
+
+<script setup lang="ts">
 
 import { createClient } from '@supabase/supabase-js'
 const supabase = createClient("https://vxnlmkevkguycioscpzk.supabase.co", 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4bmxta2V2a2d1eWNpb3NjcHprIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTAzNjU0MDIsImV4cCI6MjAwNTk0MTQwMn0.Ayw39t5Ax8lXsW8DfZOcUoeUgbQaZkOBLH--i-3p4qo')
+const userSession = await supabase.auth.getSession()
 
+let showSideBar = ref(false)
 
-//const supabase = useSupabaseClient()
+import PopupCard from '~/components/PopupCard.vue';
 
-let { data, error } = await supabase.rpc('get_styles_translations', { lang: 'ENG' })
+let showPopup = ref(false);
 
-if (error) {
-    console.log(error.details)
-    console.log(error.hint)
+function openPopup() {
+    showPopup.value = true;
+    console.log(showPopup)
+}
+function closePopup() {
+    showPopup.value = false;
 }
 
-console.log('data:', data)
 
-let styles = [
-    {
-        "id": 1,
-        "name": "Pop"
-    },
-    {
-        "id": 2,
-        "name": "Rock"
-    },
-    {
-        "id": 3,
-        "name": "Jazz"
-    },
-    {
-        "id": 4,
-        "name": "Metal"
-    },
-    {
-        "id": 5,
-        "name": "Funk"
-    },
-    {
-        "id": 6,
-        "name": "Soul"
-    },
-]
+let musiciansData = ref([])
+let showCreationPopup = ref(false)
+
+async function getMusicians(musiciansData: any) {
+
+    let { data, error } = await supabase
+        .rpc('get_musicians', {
+            language: 'ENG'
+        })
+    console.log(data)
+
+    musiciansData.value = data;
+}
+
+getMusicians(musiciansData)
 
 </script>
+
+<style>
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 250ms ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
+}
+</style>

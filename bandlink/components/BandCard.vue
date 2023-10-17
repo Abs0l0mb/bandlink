@@ -1,6 +1,6 @@
 <template>
     <div
-        class="overflow-hidden border border-gray-200 bg-white text-black p-5 rounded-3xl sm:w-[80vw] md:w-[90vw] flex flex-col sm:flex-row justify-between h-[auto] sm:h-[29vh] shadow-lg hover:-translate-y-1 hover:shadow-xl duration-900">
+        class="overflow-hidden border border-gray-200 bg-white text-black p-5 rounded-3xl sm:w-[80vw] md:w-[90vw] flex flex-col sm:flex-row justify-between h-[auto] sm:h-[29vh] shadow-lg md:hover:-translate-y-1 md:hover:shadow-xl duration-300">
         <div class="w-full sm:w-3/12 mb-4 sm:mb-0">
             <p class="text-xl sm:text-2xl md:text-3xl font-semibold border-b-2 w-9/12 line-clamp-3">{{ bandData.name }}</p>
             <div class="mt-2 flex flex-wrap gap-1">
@@ -19,9 +19,9 @@
 </template>
 
 <script setup>
-    const props = defineProps({
-        bandData: { annoucement: String, bio: String, id: Number, name:String, role_key: String, styles : Array },
-        isAdmin: Boolean
-    })
+const props = defineProps({
+    bandData: { annoucement: String, bio: String, id: Number, name: String, role_key: String, styles: Array },
+    isAdmin: Boolean
+})
 </script>
 
